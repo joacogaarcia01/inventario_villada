@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+
+{% block content %}
+  <br>
+  {% for lab in labs %}
+    <a href="{% url 'item_list' lab.id_lab %}">{{ lab }}</a>
+    <br>
+  {% endfor %}
+{% endblock %}
