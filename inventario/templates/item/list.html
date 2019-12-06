@@ -1,8 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <br>
-  {% for item in items %}
-    {{ item }}
-  {% endfor %}
+  <ul class="collapsible">
+    {% for item in items %}
+      <li>
+        <div class="collapsible-header">
+          {{ item.name }}
+          <span class="badge">
+            <i class="material-icons">keyboard_arrow_down</i>
+          </span>
+        </div>
+        <div class="collapsible-body">
+          <ul>
+            <li>{{ item.desc }}</li>
+            <li>{{ item.entry_date }}</li>
+          </ul>
+        </div>
+      </li>
+    {% endfor %}
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large modal-trigger red waves-effect waves-light" href="#id_modal">
+          <i class="large material-icons">add</i>
+        </a>
+      </div>
+      <div id="id_modal" class="modal">
+        <div class="row">
+          <form action="{% url 'create_object' %}" class="col s12" method="post">
+            {% csrf_token %}
+            <div class="modal-content">
+              <h4>Crear Item</h4>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="id_name" name="name" type="text">
+                  <label for="id_name">Nombre</label>
+                </div>
+              </div>
+              <input id="id_lab" name="lab_id" type="hidden" value="{{lab_id}}">
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="btn-flat modal-close waves-effect waves-red">Cancelar</a>
+              <button class="btn-flat modal-close waves-effect waves-red" type="submit">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </ul>
 {% endblock %}
