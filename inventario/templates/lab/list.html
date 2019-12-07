@@ -1,0 +1,9 @@
+{% for lab in labs %}
+  <div class="row">
+    <a class="btn-flat waves-effect waves-red" href="{% url 'item_list' lab.id_lab %}">
+      <i class="material-icons left">room</i>
+      {{ lab }}
+    </a>
+    {% include 'lab/delete.html' %}
+  </div>
+{% endfor %}

@@ -6,37 +6,11 @@
 
 {% block content %}
   <h2>Laboratorios</h2>
-  {% for lab in labs %}
-    <div class="row">
-      <a class="btn-flat waves-effect waves-red" href="{% url 'item_list' lab.id_lab %}">
-        <i class="material-icons left">room</i>
-        {{ lab }}
-      </a>
-    </div>
-  {% endfor %}
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large modal-trigger red waves-effect waves-light" href="#id_modal">
-      <i class="large material-icons">add</i>
-    </a>
-  </div>
-  <div id="id_modal" class="modal">
-    <div class="row">
-      <form action="{% url 'create_lab' %}" class="col s12" method="post">
-        {% csrf_token %}
-        <div class="modal-content">
-          <h4>Crear laboratorio</h4>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="id_name" name="name" type="text">
-              <label for="id_name">Nombre</label>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#!" class="btn-flat modal-close waves-effect waves-red">Cancelar</a>
-          <button class="btn-flat modal-close waves-effect waves-red" type="submit">Crear</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <!-- lab/list.html -->
+  {% if labs %}
+    {% include 'lab/list.html' %}
+  {% else %}
+    No existen laboratorios
+  {% endif %}
+  {% include 'lab/create.html' %}
 {% endblock %}
