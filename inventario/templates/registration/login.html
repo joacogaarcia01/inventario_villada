@@ -20,6 +20,7 @@
     <div class="row">
       <form action="{% url 'login' %}" class="col s12" method="post">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{% url 'lab_list' %}">
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">person</i>
@@ -34,6 +35,9 @@
           <div class="col s12">
             <button class="btn red" type="submit">Login</button>
           </div>
+          <a class="btn-flat waves-effect waves-red" href="{% url 'signup' %}">
+            Registrarse
+          </a>
         </div>
       </form>
     </div>

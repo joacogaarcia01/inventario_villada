@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from inventario import views as core_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include('inventario.urls')),
+    path('accounts/signup/', core_views.signup, name='signup'),
+    path('inventario/', include('inventario.urls')),
+    path('jet_api/', include('jet_django.urls')),
 ]

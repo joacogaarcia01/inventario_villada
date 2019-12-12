@@ -1,41 +1,66 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <ul class="collapsible">
-    {% for item in items %}
-      <li>
-        <div class="collapsible-header">
-          {{ item.name }}
-          <span class="badge">
-            <i class="material-icons">keyboard_arrow_down</i>
-          </span>
-        </div>
-        <div class="collapsible-body">
-          <ul>
-            <li>{{ item.desc }}</li>
-            <li>{{ item.entry_date }}</li>
-          </ul>
-        </div>
-      </li>
-    {% endfor %}
-    <div class="fixed-action-btn">
+  <h2>{{ lab.name }}</h2>
+  <div class="row s12">
+    <div class="col s12 m2">
+      <ul>
+        {% for type in types %}
+          <li>
+            <a href="{{ request.path }}?type={{ type.id_type | urlencode }}">{{ type.name }}</a>
+          </li>
+        {% endfor %}
+        <a href="{% url 'lab_detail' lab_id %}">Borrar filtros</a>
+      </ul>
+    </div>
+    <div class="col s12 m10">
+      {% if items %}
+        <ul class="collapsible">
+        {% for item in items %}
+          <li>
+            <div class="collapsible-header">
+              {{ item.name }}
+              {% if item.dismissed %}
+                <span class="new badge red" data-badge-caption="De baja"></span>
+              {% endif %}
+              <span class="badge" data-badge-caption="">
+                {{ item.id_type.name }}
+              </span>
+            </div>
+            <div class="collapsible-body">
+              <ul>
+                <li>Descripcion: {{ item.desc }}</li>
+                <li>Fecha de entrada: {{ item.entry_date }}</li>
+                <li>Tipo: {{ item.id_type.name }}</li>
+                <a class="btn-flat waves-effect waves-red" href="{% url 'item_delete' item.id_item %}?next={{ request.path | urlencode }}">
+                  <i class="material-icons">delete</i>
+                </a>
+              </ul>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+        No existen elementos
+      {% endif %}
+    </div>
+  </div>
+  <div class="fixed-action-btn">
         <a class="btn-floating btn-large modal-trigger red waves-effect waves-light" href="#id_modal">
           <i class="large material-icons">add</i>
         </a>
       </div>
       <div id="id_modal" class="modal">
         <div class="row">
-          <form action="{% url 'create_object' %}" class="col s12" method="post">
+          <form action="{% url "item_create" lab_id %}" class="col s12" method="post">
             {% csrf_token %}
             <div class="modal-content">
               <h4>Crear Item</h4>
               <div class="row">
-                <div class="input-field col s12">
-                  <input id="id_name" name="name" type="text">
-                  <label for="id_name">Nombre</label>
-                </div>
+                {{ form.as_p }}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="hidden" name="id_lab" value="{{ lab_id }}">
               </div>
-              <input id="id_lab" name="lab_id" type="hidden" value="{{lab_id}}">
             </div>
             <div class="modal-footer">
               <a href="#!" class="btn-flat modal-close waves-effect waves-red">Cancelar</a>
@@ -44,5 +69,4 @@
           </form>
         </div>
       </div>
-  </ul>
 {% endblock %}

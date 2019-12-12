@@ -5,21 +5,20 @@
 </div>
 <div id="id_modal" class="modal">
   <div class="row">
-    <form action="{% url 'index' %}" class="col s12" method="post">
+    <form action="{% url 'lab_create' %}" class="col s12" method="post">
       {% csrf_token %}
       <div class="modal-content">
-        <h4>Crear laboratorio</h4>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="id_name" name="name" type="text">
-            <label for="id_name">Nombre</label>
-          </div>
-        </div>
+      <h4>Crear Laboratorio</h4>
+      <div class="row">
+        {{ form.errors }}
+        {{ form.as_p }}
+        <input type="hidden" name="next" value="{% url 'lab_list' %}">
       </div>
-      <div class="modal-footer">
-        <a href="#!" class="btn-flat modal-close waves-effect waves-red">Cancelar</a>
-        <button class="btn-flat modal-close waves-effect waves-red" type="submit">Crear</button>
-      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="btn-flat modal-close waves-effect waves-red">Cancelar</a>
+      <button class="btn-flat modal-close waves-effect waves-red" type="submit">Crear</button>
+    </div>
     </form>
   </div>
 </div>
